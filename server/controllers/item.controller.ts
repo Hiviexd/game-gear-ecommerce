@@ -3,13 +3,18 @@ import { Request, Response } from "express";
 
 export async function getItems(req: Request, res: Response) {
     try {
-        const { name, minPrice, maxPrice, type } = req.query;
+        const { name, minPrice, maxPrice, type,limit } = req.query;
         const filter: any = { status: "available" };
         if (name) filter.name = { $regex: name, $options: "i" };
         if (minPrice) filter.price = { ...filter.price, $gte: Number(minPrice) };
         if (maxPrice) filter.price = { ...filter.price, $lte: Number(maxPrice) };
         if (type) filter.type = type;
-        const items = await Item.find(filter).populate("seller", "username");
+        let items = await Item.find(filter).populate("seller", "username");
+
+        if (limit) {
+            items = items.slice(0, Number(limit));
+        }
+
         res.json(items);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch items." });
