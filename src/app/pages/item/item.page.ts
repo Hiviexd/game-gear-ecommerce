@@ -29,6 +29,9 @@ import { FormsModule } from "@angular/forms";
                     <div class="text-lg font-bold">{{ item.price | currency : "USD" : "symbol" }}</div>
                     <div class="text-sm text-color-secondary">Seller: {{ item.seller.username }}</div>
                     <div class="mb-2">{{ item.description }}</div>
+                    <div class="mb-2">
+                        <span class="text-sm text-color-secondary">Available Quantity: {{ item.maxQuantity }}</span>
+                    </div>
                     <div class="flex align-items-center gap-2">
                         <label for="quantity">Quantity:</label>
                         <p-inputNumber
