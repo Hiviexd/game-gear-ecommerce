@@ -20,7 +20,7 @@ import { MenuItem } from "primeng/api";
                 </div>
             </ng-template>
             <ng-template pTemplate="end">
-                <ng-container *ngIf="auth.currentUser; else loggedOut">
+                <div *ngIf="auth.currentUser; else loggedOut" class="header-actions-row">
                     <button
                         pButton
                         type="button"
@@ -34,13 +34,12 @@ import { MenuItem } from "primeng/api";
                         icon="pi pi-shopping-cart"
                         class="p-button-text mr-2"
                         (click)="goCart()"></button>
-                    <p-avatar
-                        label="{{ auth.currentUser.username[0] | uppercase }}"
-                        [ngStyle]="{ background: '#2196F3' }"
-                        class="mr-2"></p-avatar>
-                    <span class="mr-2">Hi, {{ auth.currentUser.username }}</span>
-                    <button pButton type="button" label="Logout" class="p-button-text" (click)="logout()"></button>
-                </ng-container>
+                    <div class="flex align-items-center gap-2 mr-2">
+                        <p-avatar label="{{ auth.currentUser.username[0] | uppercase }}"></p-avatar>
+                        <span>Hi, {{ auth.currentUser.username }}!</span>
+                    </div>
+                    <p-button variant="text" [outlined]="true" label="Logout" (click)="logout()"></p-button>
+                </div>
                 <ng-template #loggedOut>
                     <button pButton type="button" label="Login" class="p-button-text mr-2" (click)="goLogin()"></button>
                     <button
@@ -58,6 +57,11 @@ import { MenuItem } from "primeng/api";
             :host {
                 display: block;
                 width: 100%;
+            }
+            .header-actions-row {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
             }
             @media (max-width: 600px) {
                 .p-menubar {
