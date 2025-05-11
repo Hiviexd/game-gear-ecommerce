@@ -15,7 +15,7 @@ import { CommonModule } from "@angular/common";
         <div *ngIf="error" class="mb-3 text-danger">{{ error }}</div>
         <div *ngIf="orders.length === 0 && !loading">No orders found.</div>
         <div *ngFor="let order of orders; let i = index" class="mb-4">
-            <p-card [header]="'Order #' + (orders.length - i)" [subheader]="getCreatedAt(order)">
+            <p-card [header]="'Order #' + (i + 1)" [subheader]="getCreatedAt(order)">
                 <button
                     pButton
                     type="button"
