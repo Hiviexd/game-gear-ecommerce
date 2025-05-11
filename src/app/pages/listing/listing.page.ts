@@ -10,6 +10,7 @@ import { DropdownModule } from "primeng/dropdown";
 import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
 import { CommonModule } from "@angular/common";
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: "app-listing-page",
@@ -64,6 +65,7 @@ export class ListingPageComponent implements OnInit {
     private api = inject(ApiService);
     private cart = inject(CartService);
     private fb = inject(FormBuilder);
+    private messageService = inject(MessageService);
     form = this.fb.group({
         name: [""],
         type: [""],
@@ -108,5 +110,10 @@ export class ListingPageComponent implements OnInit {
 
     onAddToCart(item: IItemClient) {
         this.cart.addItem(item, 1);
+        this.messageService.add({
+            severity: "success",
+            summary: "Added to Cart",
+            detail: `${item.name} added to cart.`,
+        });
     }
 }

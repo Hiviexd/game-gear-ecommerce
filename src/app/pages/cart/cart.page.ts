@@ -9,6 +9,7 @@ import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: "app-cart-page",
@@ -54,6 +55,7 @@ export class CartPageComponent {
     private cartService = inject(CartService);
     private api = inject(ApiService);
     private auth = inject(AuthService);
+    private messageService = inject(MessageService);
     cart: CartItem[] = [];
     loading = false;
     error = "";
@@ -69,10 +71,12 @@ export class CartPageComponent {
 
     updateQuantity(cartItem: CartItem) {
         this.cartService.updateQuantity(cartItem.item._id, cartItem.quantity);
+        this.messageService.add({ severity: "info", summary: "Quantity Updated", detail: "Item quantity updated." });
     }
 
     removeItem(itemId: string) {
         this.cartService.removeItem(itemId);
+        this.messageService.add({ severity: "info", summary: "Removed", detail: "Item removed from cart." });
     }
 
     checkout() {
@@ -86,6 +90,11 @@ export class CartPageComponent {
                 this.cartService.clearCart();
                 this.success = true;
                 this.loading = false;
+                this.messageService.add({
+                    severity: "success",
+                    summary: "Order Placed",
+                    detail: "Your order was placed successfully!",
+                });
             },
             error: (err) => {
                 this.error = err?.error?.error || "Checkout failed.";

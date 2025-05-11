@@ -8,6 +8,7 @@ import { InputNumberModule } from "primeng/inputnumber";
 import { DropdownModule } from "primeng/dropdown";
 import { ButtonModule } from "primeng/button";
 import { CommonModule } from "@angular/common";
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: "app-create-item-page",
@@ -24,8 +25,8 @@ import { CommonModule } from "@angular/common";
     template: `
         <p-card header="List a New Item">
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-              <label for="name">Name</label>
-                    <input pInputText id="name" formControlName="name" />
+                <label for="name">Name</label>
+                <input pInputText id="name" formControlName="name" />
                 <label for="description">Description</label>
                 <input pInputText id="description" formControlName="description" />
                 <label for="image">Image URL</label>
@@ -35,11 +36,11 @@ import { CommonModule } from "@angular/common";
                 <label for="type">Type</label>
                 <p-dropdown
                     id="type"
-                        formControlName="type"
-                        [options]="typeOptions"
-                        optionLabel="label"
-                        optionValue="value"
-                        placeholder="Type"></p-dropdown>
+                    formControlName="type"
+                    [options]="typeOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    placeholder="Type"></p-dropdown>
                 <label for="maxQuantity">Max Quantity</label>
                 <p-inputNumber id="maxQuantity" formControlName="maxQuantity" [min]="1" />
                 <button pButton type="submit" label="Create Item" [disabled]="form.invalid || loading"></button>
@@ -52,6 +53,7 @@ export class CreateItemPageComponent {
     private fb = inject(FormBuilder);
     private api = inject(ApiService);
     private router = inject(Router);
+    private messageService = inject(MessageService);
     form = this.fb.group({
         name: ["", Validators.required],
         description: ["", Validators.required],
@@ -75,6 +77,11 @@ export class CreateItemPageComponent {
         this.api.post("/items", this.form.value).subscribe({
             next: () => {
                 this.loading = false;
+                this.messageService.add({
+                    severity: "success",
+                    summary: "Item Created",
+                    detail: "Your item was listed.",
+                });
                 this.router.navigate(["/my-items"]);
             },
             error: (err) => {
