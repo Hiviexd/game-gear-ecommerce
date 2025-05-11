@@ -11,22 +11,23 @@ import { Router } from "@angular/router";
     imports: [CommonModule, CardModule, ButtonModule],
     template: `
         <div class="card-clickable" (click)="goToDetails()">
-            <p-card [header]="item.name" [subheader]="item.type | titlecase" class="w-18rem" [style]="{'background-color': item.status === 'sold' ? 'red' : '#f2f2f2'}">
-                <img
-                    *ngIf="item.image"
-                    [src]="item.image"
-                    alt="{{ item.name }}"
-                    class="w-full mb-2 border-round"
-                    style="object-fit:cover; height:180px;" />
-                <div class="mb-2 text-lg font-bold">{{ item.price | currency : "USD" : "symbol" }}</div>
-                <div class="mb-2 text-sm text-color-secondary">Seller: {{ item.seller.username }}</div>
-                <ng-content></ng-content>
+            <p-card class="custom-item-card">
+                <img *ngIf="item.image" [src]="item.image" alt="{{ item.name }}" class="item-image" />
+                <div class="item-title">{{ item.name }}</div>
+                <div class="item-price">{{ item.price | currency : "USD" : "symbol" }}</div>
+                <div class="item-row">
+                    <span class="item-seller">Seller: {{ item.seller.username }}</span>
+                </div>
+                <div class="item-row">
+                    <span class="item-qty" *ngIf="item.maxQuantity">Qty: {{ item.maxQuantity }}</span>
+                </div>
+
                 <button
                     pButton
                     type="button"
                     label="Add to Cart"
                     icon="pi pi-shopping-cart"
-                    class="w-full mt-2"
+                    class="add-to-cart-btn"
                     (click)="onAddToCart($event)"></button>
             </p-card>
         </div>
@@ -36,11 +37,57 @@ import { Router } from "@angular/router";
             :host {
                 display: block;
             }
-            .w-18rem {
-                width: 18rem;
-            }
             .card-clickable {
                 cursor: pointer;
+            }
+            .custom-item-card {
+                background: #f5f6fa !important;
+                border-radius: 12px;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .item-image {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+            .item-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                text-align: center;
+            }
+            .item-price {
+                font-size: 1.1rem;
+                font-weight: 500;
+                color: #2196f3;
+                margin-bottom: 0.5rem;
+                text-align: center;
+            }
+            .item-row {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                font-size: 0.95rem;
+                color: #555;
+                margin-bottom: 0.75rem;
+            }
+            .item-seller {
+                font-style: italic;
+            }
+            .item-qty {
+                font-weight: 500;
+            }
+            .add-to-cart-btn {
+                width: auto;
+                font-size: 0.9rem;
+                padding: 0.25rem 1rem;
+                align-self: flex-end;
             }
         `,
     ],
