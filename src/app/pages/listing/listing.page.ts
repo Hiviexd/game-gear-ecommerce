@@ -27,11 +27,12 @@ import { CommonModule } from "@angular/common";
     template: `
         <p-card header="Search & Filter Items" class="mb-4">
             <form [formGroup]="form" (ngSubmit)="onSearch()" class="flex flex-wrap gap-3 align-items-end">
-                <span class="p-float-label">
-                    <input pInputText id="name" formControlName="name" />
+                <div class="flex flex-column gap-2">
                     <label for="name">Name</label>
-                </span>
-                <span class="p-float-label">
+                    <input pInputText id="name" formControlName="name" />
+                </div>
+                <div class="flex flex-column gap-2">
+                    <label for="type">Type</label>
                     <p-dropdown
                         id="type"
                         formControlName="type"
@@ -39,22 +40,21 @@ import { CommonModule } from "@angular/common";
                         optionLabel="label"
                         optionValue="value"
                         placeholder="Type"></p-dropdown>
-                    <label for="type">Type</label>
-                </span>
-                <span class="p-float-label">
-                    <input pInputNumber id="minPrice" formControlName="minPrice" mode="currency" currency="USD" />
+                </div>
+                <div class="flex flex-column gap-2">
                     <label for="minPrice">Min Price</label>
-                </span>
-                <span class="p-float-label">
-                    <input pInputNumber id="maxPrice" formControlName="maxPrice" mode="currency" currency="USD" />
+                    <p-inputNumber id="minPrice" formControlName="minPrice" mode="currency" currency="USD" />
+                </div>
+                <div class="flex flex-column gap-2">
                     <label for="maxPrice">Max Price</label>
-                </span>
+                    <p-inputNumber id="maxPrice" formControlName="maxPrice" mode="currency" currency="USD" />
+                </div>
                 <button pButton type="submit" label="Search"></button>
             </form>
         </p-card>
         <div *ngIf="loading" class="mb-3">Loading...</div>
         <div *ngIf="error" class="mb-3 text-danger">{{ error }}</div>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 mt-3">
             <app-item-card *ngFor="let item of items" [item]="item" (addToCart)="onAddToCart(item)"></app-item-card>
         </div>
         <div *ngIf="!loading && items.length === 0" class="mt-3">No items found.</div>
