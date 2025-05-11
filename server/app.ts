@@ -4,11 +4,21 @@ import mongoose from "mongoose";
 import session from "express-session";
 import MongoStoreSession from "connect-mongo";
 import dotenv from "dotenv";
+import cors from "cors";
 import userRoutes from "./routes/user.routes";
 import itemRoutes from "./routes/item.routes";
 import orderRoutes from "./routes/order.routes";
 
 dotenv.config();
+
+// Enable CORS for Angular frontend
+const app = express();
+app.use(
+    cors({
+        origin: "http://localhost:4200",
+        credentials: true,
+    })
+);
 
 // Return the "new" updated object by default when doing findByIdAndUpdate
 mongoose.plugin((schema) => {
@@ -19,9 +29,9 @@ mongoose.plugin((schema) => {
     });
 });
 
-const app = express();
 const MongoStore = MongoStoreSession(session);
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use(cookieParser());
 
