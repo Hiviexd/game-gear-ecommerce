@@ -4,18 +4,20 @@ import { IOrderClient } from "../../core/order-client.interface";
 import { CardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
 import { CommonModule } from "@angular/common";
+import moment from "moment";
 
 @Component({
     selector: "app-orders-page",
     standalone: true,
     imports: [CommonModule, CardModule, ButtonModule],
+    providers: [],
     template: `
         <h2>My Orders</h2>
         <div *ngIf="loading" class="mb-3">Loading...</div>
         <div *ngIf="error" class="mb-3 text-danger">{{ error }}</div>
         <div *ngIf="orders.length === 0 && !loading">No orders found.</div>
         <div *ngFor="let order of orders; let i = index" class="mb-4">
-            <p-card [header]="'Order #' + (i + 1)" [subheader]="getCreatedAt(order)">
+            <p-card [header]="'Order #' + (orders.length - i)" [subheader]="getOrderDateDisplay(order)">
                 <button
                     pButton
                     type="button"
@@ -70,7 +72,9 @@ export class OrdersPageComponent implements OnInit {
         this.expanded[i] = !this.expanded[i];
     }
 
-    getCreatedAt(order: IOrderClient): string | undefined {
-        return order.createdAt ?? undefined;
+    getOrderDateDisplay(order: IOrderClient): string {
+        if (!order.createdAt) return "";
+        const date = moment(order.createdAt);
+        return `${date.fromNow()} (${date.format("DD/MM/YYYY HH:mm")})`;
     }
 }

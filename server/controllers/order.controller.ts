@@ -56,6 +56,8 @@ export async function getOrders(req: Request, res: Response) {
             path: "items.item",
             model: "Item",
         });
+        // sort orders by createdAt descending
+        orders.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         res.json(orders);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch orders." });
