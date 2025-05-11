@@ -48,6 +48,9 @@ import { Router } from "@angular/router";
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                width: 280px;
+                min-width: 0;
+                max-width: 100%;
             }
             .item-image {
                 width: 100%;
@@ -88,6 +91,11 @@ import { Router } from "@angular/router";
                 font-size: 0.9rem;
                 padding: 0.25rem 1rem;
                 align-self: flex-end;
+            }
+            @media (max-width: 320px) {
+                .custom-item-card {
+                    width: 100% !important;
+                }
             }
         `,
     ],
