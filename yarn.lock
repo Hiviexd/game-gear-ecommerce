@@ -2932,7 +2932,7 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
-cors@~2.8.5:
+cors@^2.8.5, cors@~2.8.5:
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.5.tgz#eac11da51592dd86b9f06f6e7ac293b3df875d29"
   integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
@@ -6166,6 +6166,23 @@ postcss@^8.2.14, postcss@^8.4.23, postcss@^8.4.33, postcss@^8.4.43:
     nanoid "^3.3.8"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
+
+primeflex@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/primeflex/-/primeflex-4.0.0.tgz#660d9d8494ce8d51bae89db0cc8b47fceda51035"
+  integrity sha512-UOEZCRjR36+sm5bUpDhS1xbA068l9VC6y1aTNVqQPtXuKIdPTqAWHRUxj3mKAoPrQ9W373ooJJMgNVXfiaw04g==
+
+primeicons@7:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-7.0.0.tgz#6b25c3fdcb29bb745a3035bdc1ed5902f4a419cf"
+  integrity sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==
+
+primeng@17:
+  version "17.18.15"
+  resolved "https://registry.yarnpkg.com/primeng/-/primeng-17.18.15.tgz#073a3ebc2336727aa784bcf81c9dcad8639ac328"
+  integrity sha512-66iKLPBxuZguebSylKbAst5V3Qz+2dbzT+oCHQnCbv4Gu4JH6WqbBJWr283HacQB1mUNGvyxgcHVVPhQbnEXvA==
+  dependencies:
+    tslib "^2.3.0"
 
 proc-log@^3.0.0:
   version "3.0.0"
