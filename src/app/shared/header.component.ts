@@ -118,7 +118,9 @@ export class HeaderComponent {
         this.router.navigate(["/create-item"]);
     }
     logout() {
-        this.auth.logout();
-        this.router.navigate(["/"]);
+        this.auth.logout().subscribe({
+            next: () => this.router.navigate(["/"]),
+            error: () => this.router.navigate(["/"]),
+        });
     }
 }

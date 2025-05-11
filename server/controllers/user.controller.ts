@@ -48,3 +48,10 @@ export async function getCurrentUser(req: Request, res: Response) {
         res.status(500).json({ error: "Failed to get user." });
     }
 }
+
+export async function logout(req: Request, res: Response) {
+    req.session.destroy((err) => {
+        if (err) return res.status(500).json({ error: "Failed to logout." });
+        res.json({ message: "Logged out successfully." });
+    });
+}

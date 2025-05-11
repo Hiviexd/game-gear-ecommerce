@@ -26,8 +26,7 @@ export class AuthService {
     }
 
     logout() {
-        // Optionally call a logout endpoint if you add one
-        this.userSubject.next(null);
+        return this.api.post("/users/logout", {}).pipe(tap(() => this.userSubject.next(null)));
     }
 
     fetchCurrentUser() {
