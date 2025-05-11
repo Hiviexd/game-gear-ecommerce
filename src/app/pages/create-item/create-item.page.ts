@@ -24,36 +24,24 @@ import { CommonModule } from "@angular/common";
     template: `
         <p-card header="List a New Item">
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-                <span class="p-float-label">
+              <label for="name">Name</label>
                     <input pInputText id="name" formControlName="name" />
-                    <label for="name">Name</label>
-                </span>
-                <span class="p-float-label">
-                    <input pInputText id="description" formControlName="description" />
-                    <label for="description">Description</label>
-                </span>
-                <span class="p-float-label">
-                    <input pInputText id="image" formControlName="image" />
-                    <label for="image">Image URL</label>
-                </span>
-                <span class="p-float-label">
-                    <input pInputNumber id="price" formControlName="price" mode="currency" currency="USD" />
-                    <label for="price">Price</label>
-                </span>
-                <span class="p-float-label">
-                    <p-dropdown
-                        id="type"
+                <label for="description">Description</label>
+                <input pInputText id="description" formControlName="description" />
+                <label for="image">Image URL</label>
+                <input pInputText id="image" formControlName="image" />
+                <label for="price">Price</label>
+                <p-inputNumber id="price" formControlName="price" mode="currency" currency="USD" />
+                <label for="type">Type</label>
+                <p-dropdown
+                    id="type"
                         formControlName="type"
                         [options]="typeOptions"
                         optionLabel="label"
                         optionValue="value"
                         placeholder="Type"></p-dropdown>
-                    <label for="type">Type</label>
-                </span>
-                <span class="p-float-label">
-                    <input pInputNumber id="maxQuantity" formControlName="maxQuantity" [min]="1" />
-                    <label for="maxQuantity">Max Quantity</label>
-                </span>
+                <label for="maxQuantity">Max Quantity</label>
+                <p-inputNumber id="maxQuantity" formControlName="maxQuantity" [min]="1" />
                 <button pButton type="submit" label="Create Item" [disabled]="form.invalid || loading"></button>
                 <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
             </form>
