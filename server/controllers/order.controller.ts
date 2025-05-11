@@ -9,6 +9,7 @@ export async function checkout(req: Request, res: Response) {
         if (!Array.isArray(items) || items.length === 0) {
             return res.status(400).json({ error: "No items provided." });
         }
+
         // Validate items and check availability
         const itemDocs = await Promise.all(
             items.map(async (orderItem) => {
@@ -19,17 +20,29 @@ export async function checkout(req: Request, res: Response) {
                 if (orderItem.quantity > item.maxQuantity) {
                     throw new Error(`Quantity exceeds max for item: ${item.name}`);
                 }
-                return item;
+                return { item, quantity: orderItem.quantity };
             })
         );
-        // Mark items as sold (for simplicity, mark all as sold)
+        // Update item quantities and status
         await Promise.all(
-            itemDocs.map((item) => {
-                item.status = "sold";
-                return item.save();
+            itemDocs.map(async ({ item, quantity }) => {
+                item.maxQuantity -= quantity;
+                if (item.maxQuantity <= 0) {
+                    item.status = "sold";
+                    item.maxQuantity = 0;
+                }
+                await item.save();
             })
         );
-        const order = await Order.create({ user: userId, items });
+
+        // Create the order
+        const orderItems = itemDocs.map(({ item, quantity }) => ({
+            item: item._id,
+            quantity,
+        }));
+        const order = new Order({ user: userId, items: orderItems });
+        await order.save();
+
         res.status(201).json(order);
     } catch (err: any) {
         res.status(400).json({ error: err.message || "Checkout failed." });
