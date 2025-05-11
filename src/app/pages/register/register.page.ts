@@ -7,6 +7,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from "../../core/auth.service";
 import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: "app-register-page",
@@ -20,15 +21,14 @@ import { CommonModule } from "@angular/common";
                     <input pInputText id="email" formControlName="email" type="email" />
                 </span>
                 <span class="flex flex-column gap-2 w-fit">
-                  <label for="username">Username</label>
+                    <label for="username">Username</label>
                     <input pInputText id="username" formControlName="username" />
                 </span>
                 <span class="flex flex-column gap-2">
-                  <label for="password">Password</label>
+                    <label for="password">Password</label>
                     <p-password id="password" formControlName="password" toggleMask="true" />
                 </span>
                 <button pButton type="submit" label="Register" [disabled]="form.invalid || loading"></button>
-                <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
             </form>
         </p-card>
     `,
@@ -37,6 +37,7 @@ export class RegisterPageComponent {
     private fb = inject(FormBuilder);
     private auth = inject(AuthService);
     private router = inject(Router);
+    private messageService = inject(MessageService);
     form = this.fb.group({
         email: ["", [Validators.required, Validators.email]],
         username: ["", [Validators.required, Validators.minLength(3)]],
@@ -58,6 +59,7 @@ export class RegisterPageComponent {
             error: (err) => {
                 this.error = err?.error?.error || "Registration failed.";
                 this.loading = false;
+                this.messageService.add({ severity: "error", summary: "Registration Failed", detail: this.error });
             },
         });
     }

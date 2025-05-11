@@ -7,6 +7,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from "../../core/auth.service";
 import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: "app-login-page",
@@ -24,7 +25,6 @@ import { CommonModule } from "@angular/common";
                     <p-password id="password" formControlName="password" toggleMask="true" />
                 </span>
                 <button pButton type="submit" label="Login" [disabled]="form.invalid || loading"></button>
-                <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
             </form>
         </p-card>
     `,
@@ -33,6 +33,7 @@ export class LoginPageComponent {
     private fb = inject(FormBuilder);
     private auth = inject(AuthService);
     private router = inject(Router);
+    private messageService = inject(MessageService);
     form = this.fb.group({
         email: ["", [Validators.required, Validators.email]],
         password: ["", Validators.required],
@@ -53,6 +54,7 @@ export class LoginPageComponent {
             error: (err) => {
                 this.error = err?.error?.error || "Login failed.";
                 this.loading = false;
+                this.messageService.add({ severity: "error", summary: "Login Failed", detail: this.error });
             },
         });
     }
