@@ -8,6 +8,7 @@ import cors from "cors";
 import userRoutes from "./routes/user.routes";
 import itemRoutes from "./routes/item.routes";
 import orderRoutes from "./routes/order.routes";
+import path from "path";
 
 dotenv.config();
 
@@ -73,6 +74,17 @@ app.use("/api/users", userRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/orders", orderRoutes);
 
+// serve production frontend
+if (process.env.NODE_ENV === "production") {
+  const angularDistPath = path.join(__dirname, "../game-gear-ecommerce/browser");
+
+    app.use(express.static(angularDistPath));
+
+    app.get(/^\/(?!api\/).*/, (req, res) => {
+        res.sendFile(path.join(angularDistPath, "index.html"));
+    });
+}
+
 // catch 404
 app.use((req, res) => {
     // Check if it's an API request
@@ -98,8 +110,8 @@ app.use((err, req, res, next) => {
     console.log(err);
 });
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is running on port ${process.env.PORT || 3000}`);
+app.listen(process.env.PORT || 3009, () => {
+    console.log(`Server is running on port ${process.env.PORT || 3009}`);
 });
 
 export default app;
