@@ -4,6 +4,7 @@ import { CardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
+import { AuthService } from "../core/auth.service";
 
 @Component({
     selector: "app-item-card",
@@ -15,7 +16,7 @@ import { Router } from "@angular/router";
                 <img *ngIf="item.image" [src]="item.image" alt="{{ item.name }}" class="item-image" />
                 <div class="item-title">{{ item.name }}</div>
                 <div class="item-price">{{ item.price | currency : "USD" : "symbol" }}</div>
-                <div class="item-row">
+                <div class="item-row" *ngIf="showActions">
                     <span class="item-seller">Seller: {{ item.seller.username }}</span>
                 </div>
                 <div class="item-row">
@@ -23,11 +24,13 @@ import { Router } from "@angular/router";
                 </div>
 
                 <button
+                    *ngIf="showActions"
                     pButton
                     type="button"
                     label="Add to Cart"
                     icon="pi pi-shopping-cart"
                     class="add-to-cart-btn"
+                    [disabled]="!isLoggedIn"
                     (click)="onAddToCart($event)"></button>
             </p-card>
         </div>
@@ -102,8 +105,14 @@ import { Router } from "@angular/router";
 })
 export class ItemCardComponent {
     @Input() item!: IItemClient;
+    @Input() showActions = true;
     @Output() addToCart = new EventEmitter<IItemClient>();
     private router = inject(Router);
+    private auth = inject(AuthService);
+
+    get isLoggedIn() {
+        return !!this.auth.currentUser;
+    }
 
     goToDetails() {
         this.router.navigate(["/item", this.item._id]);

@@ -14,7 +14,7 @@ import { CommonModule } from "@angular/common";
         <div *ngIf="loading" class="mb-3">Loading...</div>
         <div *ngIf="error" class="mb-3 text-danger">{{ error }}</div>
         <div class="flex flex-wrap gap-3">
-            <app-item-card *ngFor="let item of items" [item]="item"></app-item-card>
+            <app-item-card *ngFor="let item of items" [item]="item" [showActions]="false"></app-item-card>
         </div>
         <div *ngIf="!loading && items.length === 0" class="mt-3">You have not listed any items yet.</div>
     `,
