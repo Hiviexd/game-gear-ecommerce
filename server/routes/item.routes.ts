@@ -8,6 +8,6 @@ const router = Router();
 router.get("/", getItems);
 router.get("/mine", isAuthenticated, getUserItems);
 router.get("/:id", getItemById);
-router.post("/create", isAuthenticated, createItem);
+router.post("/", isAuthenticated, createItem);
 
 export default router;
