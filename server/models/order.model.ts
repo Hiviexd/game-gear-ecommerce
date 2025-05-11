@@ -1,7 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IOrder, IOrderModel, OrderItem } from "../../interfaces/order.interface";
 import { IUser } from "../../interfaces/user.interface";
-import { IItem } from "../../interfaces/item.interface";
 
 const orderSchema = new Schema<IOrder>(
     {
@@ -15,8 +14,6 @@ const orderSchema = new Schema<IOrder>(
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-
-orderSchema.index({ user: 1, item: 1 }, { unique: true });
 
 orderSchema.virtual("totalPrice").get(function (this: IOrder) {
     return this.items.reduce((total, item) => total + item.quantity * item.item.price, 0);
