@@ -15,17 +15,17 @@ import { CommonModule } from "@angular/common";
     template: `
         <p-card header="Register">
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-                <span class="p-float-label">
-                    <input pInputText id="email" formControlName="email" type="email" />
+                <span class="flex flex-column gap-2 w-fit">
                     <label for="email">Email</label>
+                    <input pInputText id="email" formControlName="email" type="email" />
                 </span>
-                <span class="p-float-label">
+                <span class="flex flex-column gap-2 w-fit">
+                  <label for="username">Username</label>
                     <input pInputText id="username" formControlName="username" />
-                    <label for="username">Username</label>
                 </span>
-                <span class="p-float-label">
-                    <input pPassword id="password" formControlName="password" toggleMask="true" />
-                    <label for="password">Password</label>
+                <span class="flex flex-column gap-2">
+                  <label for="password">Password</label>
+                    <p-password id="password" formControlName="password" toggleMask="true" />
                 </span>
                 <button pButton type="submit" label="Register" [disabled]="form.invalid || loading"></button>
                 <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
