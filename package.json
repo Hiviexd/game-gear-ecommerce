@@ -4,7 +4,7 @@
     "scripts": {
         "ng": "ng",
         "tsc": "tsc --noEmit true --project server/tsconfig.json",
-        "dev-client": "ng serve",
+        "dev-client": "ng serve --proxy-config proxy.conf.json",
         "dev-server": "ts-node-dev --respawn --transpile-only --no-notify --project server/tsconfig.json server/app.ts",
         "build-client": "ng build --configuration=production",
         "build-server": "cross-env NODE_ENV=production tsc --project server/tsconfig.json",
