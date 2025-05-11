@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
     imports: [CommonModule, CardModule, ButtonModule],
     template: `
         <div class="card-clickable" (click)="goToDetails()">
-            <p-card [header]="item.name" [subheader]="item.type | titlecase" class="w-18rem">
+            <p-card [header]="item.name" [subheader]="item.type | titlecase" class="w-18rem" [style]="{'background-color': item.status === 'sold' ? 'red' : '#f2f2f2'}">
                 <img
                     *ngIf="item.image"
                     [src]="item.image"
